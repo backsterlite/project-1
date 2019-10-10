@@ -1,0 +1,11 @@
+{
+  "name": "markup",
+  "version": "1.0.0",
+  "description": "New training course",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "backster",
+  "license": "MIT"
+}
