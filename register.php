@@ -65,18 +65,23 @@ if($_SESSION['check'] == 1)
                             <div class="card-header">Register</div>
 
                             <div class="card-body">
-                                <div><?php if(isset($_COOKIE['check_login'])){echo $_COOKIE['check_login'];}
+                                <div style="color:red;"><?php if(isset($_COOKIE['check_login'])){echo $_COOKIE['check_login'];}
                                             elseif(isset($_COOKIE['check_email'])){echo $_COOKIE['check_email'];}  ?></div>
                                 <form method="POST" action="./?page=signup">
 
                                     <div class="form-group row">
-                                        <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">Name(Maximum 50 character)</label>
 
                                         <div class="col-md-6">
                                             <input id="name" type="text" class="form-control <?php $err = (isset($_COOKIE['login_error']))?  $_COOKIE['login_error']:  @$_COOKIE['All_error']; echo @$err;?>" name="login" autofocus>
 
                                                 <span class="invalid-feedback " role="alert">
-                                                    <strong>Ошибка валидации</strong>
+                                                     <?php if(isset($_COOKIE['login_error'])): ?>
+                                                         <strong>НЕДОПУСТИМАЯ ДЛИНА</strong>
+                                                     <?php else: ?>
+                                                         <strong>МЫ ХАКЕРОВ НЕ ЛЮБИМ</strong>
+                                                     <?php endif; ?>
+                                            </span>
                                                 </span>
                                         </div>
                                     </div>
@@ -87,7 +92,12 @@ if($_SESSION['check'] == 1)
                                         <div class="col-md-6">
                                             <input id="email" name="email" type="email" class="form-control <?php $err = (isset($_COOKIE['email_error']))?  $_COOKIE['email_error']:  @$_COOKIE['All_error']; echo @$err;?>"  >
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>Ошибка валидации</strong>
+                                                     <?php if(isset($_COOKIE['email_error'])): ?>
+                                                        <strong>НЕКОРЕКТНЫЙ EMAIL</strong>
+                                                    <?php else: ?>
+                                                        <strong>МЫ ХАКЕРОВ НЕ ЛЮБИМ</strong>
+                                                    <?php endif; ?>
+                                            </span>
                                                 </span>
                                         </div>
                                     </div>
@@ -102,8 +112,10 @@ if($_SESSION['check'] == 1)
                                             <span class="invalid-feedback" role="alert">
                                                 <?php if(isset($_COOKIE['passlen'])): ?>
                                                 <strong>Длина пароля не меньше 6 знаков</strong>
+                                                <?php elseif(isset($_COOKIE['pass_error'])): ?>
+                                                <strong>ПАРОЛИ НЕ СОВПАДАЮТ</strong>
                                                 <?php else: ?>
-                                                <strong>Ошибка валидации</strong>
+                                                <strong>МЫ ХАКЕРОВ НЕ ЛЮБИМ</strong>
                                                 <?php endif; ?>
                                             </span>
                                         </div>
@@ -115,7 +127,11 @@ if($_SESSION['check'] == 1)
                                         <div class="col-md-6">
                                             <input id="password-confirm" type="password" class="form-control <?php $err = (isset($_COOKIE['pass_error']))?  $_COOKIE['pass_error']:  @$_COOKIE['All_error']; echo @$err;?>" name="password_confirmation"  autocomplete="new-password">
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>Ошибка валидации</strong>
+                                                    <?php if(isset($_COOKIE['pass_error'])): ?>
+                                                        <strong>ПАРОЛИ НЕ СОВПАДАЮТ</strong>
+                                                    <?php else: ?>
+                                                        <strong>МЫ ХАКЕРОВ НЕ ЛЮБИМ</strong>
+                                                    <?php endif; ?>
                                                 </span>
                                         </div>
                                     </div>
