@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,20 +53,23 @@
                         <div class="card-header"><h3>Комментарии</h3></div>
 
                         <div class="card-body">
+                            <?php if(isset($_COOKIE['send']) && $_COOKIE['send'] == "1"): ?>
                             <div class="alert alert-success" role="alert">
                                 Комментарий успешно добавлен
                             </div>
-
+                            <?php endif; ?>
+                            <?php   foreach($posts as $post): ?>
                             <div class="media">
                                 <img src="img/no-user.jpg" class="mr-3" alt="..." width="64" height="64">
                                 <div class="media-body">
-                                    <h5 class="mt-0">John Doe</h5>
-                                    <span><small>12/10/2025</small></span>
+                                    <h5 class="mt-0"><?= $post['nickname'];?></h5>
+                                    <span><small><?= $post['time'];?></small></span>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe aspernatur, ullam doloremque deleniti, sequi obcaecati.
+                                        <?= $post['content'];?>
                                     </p>
                                 </div>
                             </div>
+                            <?php endforeach;?>
                         </div>
                     </div>
                 </div>
@@ -75,14 +79,14 @@
                         <div class="card-header"><h3>Оставить комментарий</h3></div>
 
                         <div class="card-body">
-                            <form action="/store" method="post">
+                            <form action="./?page=store" method="post">
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Имя</label>
-                                    <input name="name" class="form-control" id="exampleFormControlTextarea1" />
+                                    <input name="nickname" class="form-control" id="exampleFormControlTextarea1" />
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Сообщение</label>
-                                    <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-success">Отправить</button>
                             </form>
@@ -93,5 +97,6 @@
         </div>
     </main>
 </div>
+<?php debug($_COOKIE);  debug($_SESSION);?>
 </body>
 </html>

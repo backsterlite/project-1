@@ -1,11 +1,15 @@
 <?php
-require_once 'variables.php';
-require_once 'QueryBilder';
 
-if(!emty($_POST))
+
+require_once 'QueryBilder.php';
+$result = addComment($_POST);
+if($result === true)
 {
-    if(strlen($_POST['name'] <= 50) && $_POST['name'] != '')
-    {
-
-    }
+    setcookie('send', "1", time() + 1, '/');
+    $_SESSION['num'] = 31;
+}else{
+    setcookie('send', '2', time() + 0, '/');
 }
+header('Location: /');
+
+exit;

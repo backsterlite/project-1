@@ -8,5 +8,10 @@
 
 
     require_once 'variables.php';
+    require_once 'QueryBilder.php';
+
+ $posts = showAllComents();
+
+
 
     include './' . $_GET['page'] . '.php';

@@ -2,13 +2,13 @@
 //Validation and create  new user
 if(isset($_POST) && !empty($_POST))// Check if the form  been submitted
 {
-    if(isset($_POST['login'], $_POST['email'], $_POST['password'], $_POST['password_confirmation']) ) //Check to all field been send
+    if(isset($_POST['login'], $_POST['email'], $_POST['password'], $_POST['password_confirmation']) )//Check to all field been send
     {
-        if($_POST['login'] != '' && strlen($_POST['login']) <= 50) // Check to the field wasn't empty and it length not more than 50
+        if($_POST['login'] != '' && strlen($_POST['login']) <= 50)// Check to the field wasn't empty and it length not more than 50
         {
-            if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) // Check to EMAIL print correct
+            if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))// Check to EMAIL print correct
             {
-                if($_POST['password'] == $_POST['password_confirmation']) // Check to password equal confirm-password
+                if($_POST['password'] == $_POST['password_confirmation'])// Check to password equal confirm-password
                 {
                     $check = true;
                 }else{

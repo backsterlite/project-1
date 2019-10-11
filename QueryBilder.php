@@ -40,3 +40,27 @@ function checkRegister($data)
     $_SESSION['check'] = 1;
     return 0;
 }
+
+function addComment ($data)
+{
+    $data['nickname'] =htmlspecialchars(trim($data['nickname']));
+    $data['content'] =htmlspecialchars(trim($data['content']));
+    $db_connect = new PDO ('mysql:dbname=markup; host=localhost', 'root', '');
+    $sql = 'INSERT INTO  coments (nickname, content) VALUES (:nickname, :content)';
+    $stat =  $db_connect->prepare($sql);
+    $stat->bindParam(':nickname',$data['nickname']);
+    $stat->bindParam(':content',$data['content']);
+    $result = $stat->execute();
+    return $result;
+}
+
+function showAllComents()
+{
+    $db_connect = new PDO ('mysql:dbname=markup; host=localhost', 'root', '');
+    $sql = 'SELECT * FROM coments';
+    $stat =  $db_connect->prepare($sql);
+    $stat->execute();
+    $show =$stat->fetchAll(2);
+
+    return $show;
+}
