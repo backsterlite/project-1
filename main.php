@@ -63,7 +63,7 @@
                                 <img src="img/no-user.jpg" class="mr-3" alt="..." width="64" height="64">
                                 <div class="media-body">
                                     <h5 class="mt-0"><?= $post['nickname'];?></h5>
-                                    <span><small><?= $post['time'];?></small></span>
+                                    <span><small><?= date("d/m/y",strtotime($post['time']));?></small></span>
                                     <p>
                                         <?= $post['content'];?>
                                     </p>
@@ -81,12 +81,25 @@
                         <div class="card-body">
                             <form action="./?page=store" method="post">
                                 <div class="form-group">
+
                                     <label for="exampleFormControlTextarea1">Имя</label>
-                                    <input name="nickname" class="form-control" id="exampleFormControlTextarea1" />
+                                    <div class="col-md-6">
+                                        <input name="nickname" class="form-control <?= @$_COOKIE['empty_nickname'] ?>" id="exampleFormControlTextarea1" />
+                                        <span class="invalid-feedback " role="alert">
+                                                    <strong>Заполните поле</strong>
+                                                </span>
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Сообщение</label>
-                                    <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <div class="col-md-6">
+                                        <textarea name="content" class="form-control <?= @$_COOKIE['empty_content'];?>" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <span class="invalid-feedback " role="alert">
+                                                    <strong>Заполните поле</strong>
+                                                </span>
+                                    </div>
+
                                 </div>
                                 <button type="submit" class="btn btn-success">Отправить</button>
                             </form>

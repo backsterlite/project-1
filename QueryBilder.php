@@ -4,7 +4,8 @@ function createUser($data)
 {
     $data['login'] =htmlspecialchars(trim($data['login']));
     $data['email'] =htmlspecialchars(trim($data['email']));
-    $data['email'] =htmlspecialchars(trim($data['password']));
+    $data['password'] =htmlspecialchars(trim($data['password']));
+    $data['password'] = crypt($data['password'], 'odin');
     $db_connect = new PDO ('mysql:dbname=markup; host=localhost', 'root', '');
     $sql = 'INSERT INTO  users (login, email, password) VALUES (:login, :email, :password)';
     $stat =  $db_connect->prepare($sql);
@@ -57,7 +58,7 @@ function addComment ($data)
 function showAllComents()
 {
     $db_connect = new PDO ('mysql:dbname=markup; host=localhost', 'root', '');
-    $sql = 'SELECT * FROM coments';
+    $sql = 'SELECT * FROM coments ORDER BY id DESC';
     $stat =  $db_connect->prepare($sql);
     $stat->execute();
     $show =$stat->fetchAll(2);

@@ -4,6 +4,7 @@ if($_SESSION['check'] == 1)
     setcookie('login_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
     setcookie('email_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
     setcookie('pass_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
+    setcookie('passlen_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
     setcookie('All_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
     setcookie('check_login', "Такое имя уже занято", time() - 3600, '/');
     setcookie('check_email', "Такой email уже существует", time() - 3600, '/');
@@ -95,9 +96,15 @@ if($_SESSION['check'] == 1)
                                         <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control <?php $err = (isset($_COOKIE['pass_error']))?  $_COOKIE['pass_error']:  @$_COOKIE['All_error']; echo @$err;?> " name="password"  autocomplete="new-password">
+                                            <input id="password" type="password" class="form-control <?php if(isset($_COOKIE['passlen'])){echo $_COOKIE['passlen'];}
+                                                                                                    if(isset($_COOKIE['pass_error'])){echo $_COOKIE['pass_error'];}
+                                                                                                    if(isset($_COOKIE['All_error'])){echo $_COOKIE['All_error'];}?> " name="password"  autocomplete="new-password">
                                             <span class="invalid-feedback" role="alert">
+                                                <?php if(isset($_COOKIE['passlen'])): ?>
+                                                <strong>Длина пароля не меньше 6 знаков</strong>
+                                                <?php else: ?>
                                                 <strong>Ошибка валидации</strong>
+                                                <?php endif; ?>
                                             </span>
                                         </div>
                                     </div>
@@ -128,6 +135,7 @@ if($_SESSION['check'] == 1)
             </div>
         </main>
     </div>
+<?php debug($_COOKIE);  debug($_SESSION); ?>
 </body>
 </html>
 
