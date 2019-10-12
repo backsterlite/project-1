@@ -5,7 +5,7 @@ function createUser($data)
     $data['login'] =htmlspecialchars(trim($data['login']));
     $data['email'] =htmlspecialchars(trim($data['email']));
     $data['password'] =htmlspecialchars(trim($data['password']));
-    $data['password'] = crypt($data['password'], 'odin');
+    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
     $db_connect = new PDO ('mysql:dbname=markup; host=localhost', 'root', '');
     $sql = 'INSERT INTO  users (login, email, password) VALUES (:login, :email, :password)';
     $stat =  $db_connect->prepare($sql);
@@ -19,7 +19,7 @@ function checkRegister($data)
 {
     $data['login'] =htmlspecialchars(trim($data['login']));
     $data['email'] =htmlspecialchars(trim($data['email']));
-    $db_connect = new PDO ('mysql:dbname=markup; host=localhost', 'root', '');
+    $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
     $sql = 'SELECT * FROM users WHERE login=:login OR email=:email';
     $stat =  $db_connect->prepare($sql);
     $stat->bindParam(':login',$data['login']);
@@ -38,7 +38,34 @@ function checkRegister($data)
             return 2;
         }
     }
-    $_SESSION['check'] = 1;
+    return 0;
+}
+
+function checkLogin($data)
+{
+
+    $data['email'] =htmlspecialchars(trim($data['email']));
+    $data['password'] =htmlspecialchars(trim($data['password']));
+//    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+    $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
+    $sql = 'SELECT * FROM users WHERE email=:email';
+    $stat =  $db_connect->prepare($sql);
+    $stat->bindParam(':email',$data['email']);
+//    $stat->bindParam(':password',$data['password']);
+    $num = $stat->rowCount($stat->execute());
+    $check =$stat->fetch(2);
+
+
+    if($num > 0)
+    {
+        if(password_verify($data['password'], $check['password']))
+        {
+            $_SESSION['user'] = $check['login'];
+            $_SESSION['id'] = $check['id'];
+            return 1;
+        }
+
+    }
     return 0;
 }
 
@@ -57,11 +84,22 @@ function addComment ($data)
 
 function showAllComents()
 {
-    $db_connect = new PDO ('mysql:dbname=markup; host=localhost', 'root', '');
+    $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
     $sql = 'SELECT * FROM coments ORDER BY id DESC';
     $stat =  $db_connect->prepare($sql);
     $stat->execute();
     $show =$stat->fetchAll(2);
 
+    return $show;
+}
+
+function getUserName($id)
+{
+    $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
+    $sql = 'SELECT login FROM users WHERE id=:id';
+    $stat =  $db_connect->prepare($sql);
+    $stat->bindParam(':id', $id);
+    $stat->execute();
+    $show =$stat->fetch(2);
     return $show;
 }

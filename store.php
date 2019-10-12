@@ -1,5 +1,8 @@
 <?php
-
+if($_SESSION['log_complete'] == '1')
+{
+    $_POST['nickname'] = $_SESSION['user'];
+}
 if(isset($_POST) && empty($_POST['content']) && empty($_POST['nickname']))
 {
     setcookie('empty_nickname', "@error('name') is-invalid @enderror", time() + 1, '/');
@@ -19,6 +22,7 @@ if(isset($_POST) && empty($_POST['content']) && empty($_POST['nickname']))
 }else
 {
     require_once 'QueryBilder.php';
+
     $result = addComment($_POST);
     if($result === true)
     {

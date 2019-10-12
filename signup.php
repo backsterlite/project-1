@@ -63,6 +63,7 @@ if($check === true)
     }elseif(checkRegister($_POST) == 0)
     {
         createUser($_POST);
+        setcookie('reg_complete', "1", time() + 2, '/');
         header('Location: ./?page=login');
     }
 

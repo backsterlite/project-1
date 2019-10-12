@@ -27,20 +27,36 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
+                <?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
                 <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/?page=login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/?page=register">Register</a>
-                    </li>
+                    <li>Здравствуй <?= $_SESSION['user']?></li>
                 </ul>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/?page=logout&log=exit">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/?page=profile">Profile</a>
+                        </li>
+                    </ul>
+                <?php else: ?>
+                <ul class="navbar-nav ml-auto">
+                    <li>Здравствуй Гость</li>
+                </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/?page=login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/?page=register">Register</a>
+                        </li>
+                    </ul>
+                <?php endif; ?>
+                <!-- Right Side Of Navbar -->
+
             </div>
         </div>
     </nav>
@@ -80,6 +96,7 @@
 
                         <div class="card-body">
                             <form action="./?page=store" method="post">
+                                <?php if($_SESSION['log_complete'] != '1'): ?>
                                 <div class="form-group">
 
                                     <label for="exampleFormControlTextarea1">Имя</label>
@@ -91,6 +108,7 @@
                                     </div>
 
                                 </div>
+                                <?php endif; ?>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Сообщение</label>
                                     <div class="col-md-6">
