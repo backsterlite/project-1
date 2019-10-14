@@ -76,9 +76,9 @@
                             <?php endif; ?>
                             <?php   foreach($posts as $post): ?>
                             <div class="media">
-                                <img src="img/no-user.jpg" class="mr-3" alt="..." width="64" height="64">
+                                <img src="<?php if($post['avatar_path'] == ""){ echo 'img/no-user.jpg';}else{echo strstr(str_replace('\\', '/',$post['avatar_path']), '/profile') ;/*$post['avatar_path'];*/}?>" class="mr-3" alt="..." width="64" height="64">
                                 <div class="media-body">
-                                    <h5 class="mt-0"><?= $post['nickname'];?></h5>
+                                    <h5 class="mt-0"><?= $post['login'];?></h5>
                                     <span><small><?= date("d/m/y",strtotime($post['time']));?></small></span>
                                     <p>
                                         <?= $post['content'];?>
@@ -95,20 +95,14 @@
                         <div class="card-header"><h3>Оставить комментарий</h3></div>
 
                         <div class="card-body">
+                            <?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] != '1' || !isset($_SESSION['log_complete'])): ?>
+                            <div class="alert alert-danger" role="alert">
+                                Комментарии доступны только зарегестрированым пользователям
+                                <a class="nav-link" href="/?page=register">Зарегестрироваться</a> или
+                                <a class="nav-link" href="/?page=login">Войти</a>
+                            </div>
+                            <?php else: ?>
                             <form action="./?page=store" method="post">
-                                <?php if($_SESSION['log_complete'] != '1'): ?>
-                                <div class="form-group">
-
-                                    <label for="exampleFormControlTextarea1">Имя</label>
-                                    <div class="col-md-6">
-                                        <input name="nickname" class="form-control <?= @$_COOKIE['empty_nickname'] ?>" id="exampleFormControlTextarea1" />
-                                        <span class="invalid-feedback " role="alert">
-                                                    <strong>Заполните поле</strong>
-                                                </span>
-                                    </div>
-
-                                </div>
-                                <?php endif; ?>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Сообщение</label>
                                     <div class="col-md-6">
@@ -117,10 +111,10 @@
                                                     <strong>Заполните поле</strong>
                                                 </span>
                                     </div>
-
                                 </div>
                                 <button type="submit" class="btn btn-success">Отправить</button>
                             </form>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

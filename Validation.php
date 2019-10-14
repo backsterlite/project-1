@@ -59,7 +59,7 @@ function validForLogin($data)
     {
         if(isset($_POST['email'],  $_POST['password']) )//Check to all field been send
         {
-            if(!empty($_POST['email']) && !empty($_POST['password']))
+            if(!empty(trim($_POST['email'])) && !empty(trim($_POST['password'])))
             {
                 if(isset($_POST['remember']) && $_POST['remember'] == true)
                 {

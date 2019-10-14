@@ -5,7 +5,7 @@ $check =  validForLogin($_POST);
 if($check == 1)
 {
     $_SESSION['log_complete'] = '1';
-    setcookie('id', $_SESSION['id'], time() + 36000, '/');
+    setcookie('id', $_SESSION['id'], time() + 3600, '/');
     header('Location: /');
     exit;
 }elseif($check == 0)

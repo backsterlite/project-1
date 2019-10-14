@@ -4,3 +4,4 @@ define('DB', [
     'username' => 'root',
     'password' => ''
 ]);
+define('AVATARS_PATH', __DIR__ . '\profile\uploads\avatars\\');

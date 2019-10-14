@@ -53,14 +53,15 @@ if(isset($_POST) && !empty($_POST))// Check if the form  been submitted
 if($check === true)
 {
     require_once 'QueryBilder.php';
-    if(checkRegister($_POST) == 1)
+    $set = checkRegister($_POST);
+    if($set == '1')
     {
         setcookie('check_login', "Такое имя уже занято", time() + 2, '/');
         header('Location: ./?page=register');
-    }elseif(checkRegister($_POST) == 2){
+    }elseif($set == '2'){
         setcookie('check_email', "Такой email уже существует", time() + 2, '/');
         header('Location: ./?page=register');
-    }elseif(checkRegister($_POST) == 0)
+    }elseif($set == 'ok')
     {
         createUser($_POST);
         setcookie('reg_complete', "1", time() + 2, '/');

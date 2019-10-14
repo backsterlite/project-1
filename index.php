@@ -1,24 +1,31 @@
 <?php
     session_start();
     error_reporting(-1);
-
-
-    setcookie('save_email', 'true', time() + 3600, '/');
-    setcookie('save_login', 'true', time() + 3600, '/');
-
-
     require_once 'variables.php';
     require_once 'QueryBilder.php';
     require_once 'Validation.php';
     require_once 'Config.php';
+if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1')
+{
+    $user = getUsers();
+    $_SESSION['user'] = $user['login'];
+    $_SESSION['avatar_path'] = $user['avatar_path'];
+    $_SESSION['user_email'] = $user['email'];
+}
 if(isset($_COOKIE['remember']) && $_COOKIE['remember'] == '1')
 {
-    $_SESSION['log_complete'] = '1';
-    $user = getUserName($_COOKIE['id']);
-    $_SESSION['user'] = $user['login'];
+    if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '0')
+    {
+        $_SESSION['log_complete'] = '1';
+        $user = getUsers();
+        $_SESSION['user'] = $user['login'];
+        $_SESSION['avatar_path'] = $user['avatar_path'];
+        $_SESSION['user_email'] = $user['email'];
+    }
+
 }
 
- $posts = showAllComents();
+if($_GET['page'] == 'main') $posts = showAllComents();
 
 
 

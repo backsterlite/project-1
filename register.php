@@ -1,16 +1,4 @@
-<?php
-if($_SESSION['check'] == 1)
-{
-    setcookie('login_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
-    setcookie('email_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
-    setcookie('pass_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
-    setcookie('passlen_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
-    setcookie('All_error', "@error('name') is-invalid @enderror", time() - 3600, '/');
-    setcookie('check_login', "Такое имя уже занято", time() - 3600, '/');
-    setcookie('check_email', "Такой email уже существует", time() - 3600, '/');
-}
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,7 +86,7 @@ if($_SESSION['check'] == 1)
                                                          <strong>МЫ ХАКЕРОВ НЕ ЛЮБИМ</strong>
                                                      <?php endif; ?>
                                             </span>
-                                                </span>
+
                                         </div>
                                     </div>
 
