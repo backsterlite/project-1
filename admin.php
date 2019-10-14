@@ -1,10 +1,31 @@
+<?php
+if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1')
+{
+    if(isset($_SESSION['user']) && $_SESSION['user'] != ADMIN['login'])
+    {
+        header('Location: /');
+        exit;
+    }
+}
+if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '0')
+{
+header('Location: /');
+exit;
+}
+if(!isset($_SESSION['log_complete']))
+{
+header('Location: /');
+exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Comments</title>
+    <title>Admin</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -69,6 +90,15 @@
                             <div class="card-header"><h3>Админ панель</h3></div>
 
                             <div class="card-body">
+                                <?php if(isset($_COOKIE['send']) && $_COOKIE['send'] == "1"): ?>
+                                    <div class="alert alert-success" role="alert">
+                                        Изменения сохранены
+                                    </div>
+                                <?php elseif(isset($_COOKIE['send']) && $_COOKIE['send'] == "0"): ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Произошла ошибка
+                                    </div>
+                                <?php endif; ?>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -91,11 +121,8 @@
                                             <td><?= nl2br($post['content']);?></td>
 
                                             <td>
-                                                    <a href="" class="btn btn-success">Разрешить</a>
-
-                                                    <a href="" class="btn btn-warning">Запретить</a>
-
-                                                <a href="" onclick="return confirm('are you sure?')" class="btn btn-danger">Удалить</a>
+                                                <?php   $valid = (isset($post['alow']) && $post['alow'] == 1)? "<a href='./?page=update&alow=0&id={$post['id']} ' class='btn btn-warning'>Запретить</a>": "<a href='./?page=update&alow=1&id={$post['id']}  ' class='btn btn-success'>Разрешить</a>"; echo $valid;?>
+                                                <a href="./?page=update&delete=ok&id=<?= $post['id'];?>" onclick="return confirm('are you sure?')" class="btn btn-danger">Удалить</a>
                                             </td>
 
                                         </tr>
@@ -113,7 +140,5 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <?php debug($_COOKIE); ?>
-    <?php debug($_SESSION); ?>
-</body>
+
 </html>

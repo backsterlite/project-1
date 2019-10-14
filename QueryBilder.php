@@ -127,6 +127,7 @@ function getUsers()
 // Update information
 function update($table, $data)
 {
+    $id = $data['id'];
         $index = array_keys($data);
         if(isset($data['password'])) $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         $q = '';
@@ -138,17 +139,38 @@ function update($table, $data)
 
         }
         $q = rtrim($q,',');
-
         $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
-        $sql = "UPDATE $table SET $q WHERE user_id=:id";
-        $stat = $db_connect->prepare($sql);
-        for($i = 0; $i < count($index); $i++)
-        {
-            $stat->bindParam($index[$i],$val[$i]);
+        if(isset($data['id'])){
+            $q = str_replace(',id=:id', '', $q);
+            $sql = "UPDATE $table SET $q WHERE id=:id";
+            $stat = $db_connect->prepare($sql);
+            for($i = 0; $i < count($index); $i++)
+            {
+                $stat->bindParam($index[$i],$val[$i]);
+            }
+        }else{
+            $sql = "UPDATE $table SET $q WHERE user_id=:id";
+            $stat = $db_connect->prepare($sql);
+            for($i = 0; $i < count($index); $i++)
+            {
+                $stat->bindParam($index[$i],$val[$i]);
+            }
+            $stat->bindParam(':id',$_SESSION['id']);
         }
-        $stat->bindParam(':id',$_SESSION['id']);
+
+
         $res = $stat->execute();
         return $res;
 
 
+}
+
+function delete($table, $id)
+{
+    $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
+    $sql = "DELETE FROM $table WHERE id=:id";
+    $stat =  $db_connect->prepare($sql);
+    $stat->bindParam(':id', $id);
+    $show = $stat->execute();
+    return $show;
 }

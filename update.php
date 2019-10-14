@@ -1,4 +1,57 @@
 <?php
+
+if(isset($_GET))
+{
+    if(isset($_GET['alow']) &&$_GET['alow'] == 1)
+    {
+        $data['alow'] = $_GET['alow'];
+        $data['id'] = $_GET['id'];
+        $res = update('coments',$data);
+        if ($res === true) {
+            setcookie('send', '1', time() + 2, '/');
+            header('Location: ./?page=admin');
+            exit;
+        } else {
+            setcookie('send', '0', time() + 2, '/');
+            header('Location: ./?page=admin');
+            exit;
+        }
+    }elseif(isset($_GET['alow']) && $_GET['alow'] == 0)
+    {
+        $data['alow'] = $_GET['alow'];
+        $data['id'] = $_GET['id'];
+        $res = update('coments', $data);
+        if ($res === true) {
+            setcookie('send', '1', time() + 2, '/');
+            header('Location: ./?page=admin');
+            exit;
+        } else {
+            setcookie('send', '0', time() + 2, '/');
+            header('Location: ./?page=admin');
+            exit;
+        }
+    }if(isset($_GET['delete'])  && $_GET['delete'] == 'ok')
+    {
+    $res = delete('coments', $_GET['id']);
+    if ($res === true) {
+        setcookie('send', '1', time() + 2, '/');
+        header('Location: ./?page=admin');
+        exit;
+    } else {
+        setcookie('send', '0', time() + 2, '/');
+        header('Location: ./?page=admin');
+        exit;
+    }
+    }
+
+}
+
+
+
+
+
+
+
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $request = [];
         if(isset($_POST['security']) && $_POST['security'] == '1')

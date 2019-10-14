@@ -16,7 +16,7 @@ if(!isset($_SESSION['log_complete']))
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Comments</title>
+    <title>Profile | <?= @$_SESSION['user']?></title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -37,8 +37,24 @@ if(!isset($_SESSION['log_complete']))
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
+                <?php if( isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1' && isset($_SESSION['user']) && $_SESSION['user'] == ADMIN['login']): ?>
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <li></li>
+                    </ul>
+                    <!-- Right Side Of Navbar -->
+                    <div class="btn-group">
+                        <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?= $_SESSION['user']?>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/?page=logout&log=exit">Logout</a>
+                            <a class="dropdown-item" href="/?page=profile">Profile</a>
+                            <a class="dropdown-item" href="/?page=admin">Admin</a>
+                        </div>
+                    </div>
+                <?php elseif(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
+                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li></li>
                     </ul>
@@ -52,6 +68,7 @@ if(!isset($_SESSION['log_complete']))
                             <a class="dropdown-item" href="/?page=profile">Profile</a>
                         </div>
                     </div>
+
                 <?php else: ?>
                     <ul class="navbar-nav ml-auto">
                         <li></li>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Comments</title>
+    <title>Main</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -25,8 +25,24 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <?php if( isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1' && isset($_SESSION['user']) && $_SESSION['user'] == ADMIN['login']): ?>
                 <!-- Left Side Of Navbar -->
-                <?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
+                <ul class="navbar-nav ml-auto">
+                    <li></li>
+                </ul>
+                <!-- Right Side Of Navbar -->
+                <div class="btn-group">
+                    <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?= $_SESSION['user']?>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/?page=logout&log=exit">Logout</a>
+                        <a class="dropdown-item" href="/?page=profile">Profile</a>
+                        <a class="dropdown-item" href="/?page=admin">Admin</a>
+                    </div>
+                </div>
+                <?php elseif(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
+                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li></li>
                     </ul>
@@ -40,6 +56,7 @@
                             <a class="dropdown-item" href="/?page=profile">Profile</a>
                         </div>
                     </div>
+
                 <?php else: ?>
                     <ul class="navbar-nav ml-auto">
                         <li></li>
@@ -78,6 +95,7 @@
                                 </div>
                             <?php endif; ?>
                             <?php   foreach($posts as $post): ?>
+                                <?php if($post['alow'] == 1): ?>
                                 <div class="media">
                                     <img src="<?php if($post['avatar_path'] == ""){ echo 'img/no-user.jpg';}else{echo strstr(str_replace('\\', '/',$post['avatar_path']), '/profile') ;/*$post['avatar_path'];*/}?>" class="mr-3" alt="..." width="64" height="64">
                                     <div class="media-body">
@@ -88,6 +106,8 @@
                                         </p>
                                     </div>
                                 </div>
+                                <?php else : continue; ?>
+                            <?php endif; ?>
                             <?php endforeach;?>
                         </div>
                     </div>
@@ -128,7 +148,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<?php debug($_COOKIE); ?>
-<?php debug($_SESSION); ?>
 </body>
 </html>
