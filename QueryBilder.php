@@ -44,9 +44,9 @@ function checkRegister($data)
 function checkLogin($data)
 {
 
-    $data['email'] = @trim($data['email']);
-    $data['password'] = @trim($data['password']);
-    $data['password'] = @trim($data['current']);
+    @$data['email'] = trim($data['email']);
+    $data['password'] = (isset($data['current']))?trim($data['current']):trim($data['password']);
+
 
     $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
     if (isset($data['email'] ) && !empty(trim($data['email'])))
@@ -67,7 +67,7 @@ function checkLogin($data)
 
     if($num > 0)
     {
-        if($_SESSION['current'] == 'ok')
+        if(isset($_SESSION['current']) && $_SESSION['current'] == 'ok')
         {
             if(password_verify($data['password'], $check['password']))
             {
@@ -128,12 +128,14 @@ function getUsers()
 function update($table, $data)
 {
         $index = array_keys($data);
+        if(isset($data['password'])) $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         $q = '';
         $val = [];
         foreach($data as $k => $v)
         {
             $q .= $k . '=:' . $k . ',';
             $val[] = $v;
+
         }
         $q = rtrim($q,',');
 

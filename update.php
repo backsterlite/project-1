@@ -57,7 +57,7 @@
             {
                 if (isset($_POST[$k])) {
                     if (!empty(trim($_POST[$k]))) {
-                        $request[$k] = trim($_POST[$v]);
+                        $request[$k] = trim($_POST[$k]);
                     }
                 }
 

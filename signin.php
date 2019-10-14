@@ -5,6 +5,8 @@ $check =  validForLogin($_POST);
 if($check == 1)
 {
     $_SESSION['log_complete'] = '1';
+    if(isset($_POST['remember']) && $_POST['remember'] == true) setcookie('remember', $_SESSION['remember'], time() + 36000, '/');
+    unset($_SESSION['remember']);
     setcookie('id', $_SESSION['id'], time() + 3600, '/');
     header('Location: /');
     exit;

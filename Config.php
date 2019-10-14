@@ -5,3 +5,7 @@ define('DB', [
     'password' => ''
 ]);
 define('AVATARS_PATH', __DIR__ . '\profile\uploads\avatars\\');
+define('ADMIN', [
+    'login' => 'backster',
+    'email' => 'backstercorp@gmail.com'
+]);

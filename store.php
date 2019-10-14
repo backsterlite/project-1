@@ -7,6 +7,7 @@ if($_SESSION['log_complete'] == '1')
 if(isset($_POST) && empty(trim($_POST['content'])))
 {
     setcookie('empty_content', "@error('name') is-invalid @enderror", time() + 1, '/');
+    setcookie('send', '2', time() + 1, '/');
     header('Location: /');
     exit;
 }else

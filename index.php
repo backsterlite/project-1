@@ -25,8 +25,8 @@ if(isset($_COOKIE['remember']) && $_COOKIE['remember'] == '1')
 
 }
 
-if($_GET['page'] == 'main') $posts = showAllComents();
+if($_GET['page'] == 'main' || $_GET['page'] == 'admin') $posts = showAllComents();
 
 
 
-    include './' . $_GET['page'] . '.php';
+     include './' . $_GET['page'] . '.php';

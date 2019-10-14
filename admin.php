@@ -17,7 +17,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="index.php">
+                <a class="navbar-brand" href="./">
                     Project
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,23 +26,40 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
+                    <?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
+                        <ul class="navbar-nav ml-auto">
+                            <li></li>
+                        </ul>
+                        <!-- Right Side Of Navbar -->
+                        <div class="btn-group">
+                            <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <?= $_SESSION['user']?>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/?page=logout&log=exit">Logout</a>
+                                <a class="dropdown-item" href="/?page=profile">Profile</a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <ul class="navbar-nav ml-auto">
+                            <li></li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Authentication Links -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/?page=login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/?page=register">Register</a>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.php">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="register.php">Register</a>
-                            </li>
-                    </ul>
+
                 </div>
             </div>
         </nav>
+
 
         <main class="py-4">
             <div class="container">
@@ -62,15 +79,17 @@
                                             <th>Действия</th>
                                         </tr>
                                     </thead>
-
+                                    <?php   foreach($posts as $post): ?>
                                     <tbody>
                                         <tr>
+
                                             <td>
-                                                <img src="img/no-user.jpg" alt="" class="img-fluid" width="64" height="64">
+                                                <img src="<?php if($post['avatar_path'] == ""){ echo 'img/no-user.jpg';}else{echo strstr(str_replace('\\', '/',$post['avatar_path']), '/profile') ;/*$post['avatar_path'];*/}?>" alt="" class="img-fluid" width="64" height="64">
                                             </td>
-                                            <td>John</td>
-                                            <td>12/08/2045</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta aut quam cumque libero reiciendis, dolor.</td>
+                                            <td><?= $post['login'];?></td>
+                                            <td><?= date("d/m/y",strtotime($post['time']));?></td>
+                                            <td><?= nl2br($post['content']);?></td>
+
                                             <td>
                                                     <a href="" class="btn btn-success">Разрешить</a>
 
@@ -78,8 +97,11 @@
 
                                                 <a href="" onclick="return confirm('are you sure?')" class="btn btn-danger">Удалить</a>
                                             </td>
+
                                         </tr>
+
                                     </tbody>
+                                    <?php endforeach;?>
                                 </table>
                             </div>
                         </div>
@@ -88,5 +110,10 @@
             </div>
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <?php debug($_COOKIE); ?>
+    <?php debug($_SESSION); ?>
 </body>
 </html>

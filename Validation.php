@@ -63,7 +63,8 @@ function validForLogin($data)
             {
                 if(isset($_POST['remember']) && $_POST['remember'] == true)
                 {
-                    setcookie('remember', '1', time() + 36000, '/');
+                    $_SESSION['remember'] = '1';
+
                 }
 
                 require_once 'QueryBilder.php';

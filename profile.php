@@ -1,8 +1,15 @@
-<?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '0')
+<?php
+if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '0')
 {
     header('Location: /');
     exit;
-}?>
+}
+if(!isset($_SESSION['log_complete']))
+{
+    header('Location: /');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,51 +26,51 @@
     <link href="css/app.css" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    Project
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="./">
+                Project
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
-                        <ul class="navbar-nav ml-auto">
-                            <li>Здравствуй <?= $_SESSION['user']?></li>
-                        </ul>
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ml-auto">
-                            <!-- Authentication Links -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="/?page=logout&log=exit">Logout</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/?page=profile">Profile</a>
-                            </li>
-                        </ul>
-                    <?php else: ?>
-                        <ul class="navbar-nav ml-auto">
-                            <li>Здравствуй Гость</li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto">
-                            <!-- Authentication Links -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="/?page=login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/?page=register">Register</a>
-                            </li>
-                        </ul>
-                    <?php endif; ?>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <?php if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1'): ?>
+                    <ul class="navbar-nav ml-auto">
+                        <li></li>
+                    </ul>
                     <!-- Right Side Of Navbar -->
+                    <div class="btn-group">
+                        <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?= $_SESSION['user']?>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/?page=logout&log=exit">Logout</a>
+                            <a class="dropdown-item" href="/?page=profile">Profile</a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <ul class="navbar-nav ml-auto">
+                        <li></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/?page=login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/?page=register">Register</a>
+                        </li>
+                    </ul>
+                <?php endif; ?>
+                <!-- Right Side Of Navbar -->
 
-                </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
         <main class="py-4">
           <div class="container">
@@ -196,5 +203,9 @@
     </div>
 <?php var_dump($_COOKIE);
 var_dump($_SESSION); ?>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
 </html>
