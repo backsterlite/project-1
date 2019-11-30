@@ -25,7 +25,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <?php if( isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1' && isset($_SESSION['user']) && $_SESSION['user'] == ADMIN['login']): ?>
+                <?php if( isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1' && isset($_SESSION['user']) && $_SESSION['user'] == ADMIN): ?>
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li></li>

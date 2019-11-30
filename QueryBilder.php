@@ -94,10 +94,10 @@ function addComment ($data)
     $data['content'] =htmlspecialchars(trim($data['content']));
     $data['id'] =htmlspecialchars(trim($data['id']));
     $db_connect = new PDO (DB['dsn'], DB['username'], DB['password']);
-    $sql = 'INSERT INTO  coments (content, user_id) VALUES (:content, :user_id)';
+    $sql = 'INSERT INTO  coments (content, user_id) VALUES  (:content , :id )';
     $stat =  $db_connect->prepare($sql);
     $stat->bindParam(':content',$data['content']);
-    $stat->bindParam(':user_id',$data['id']);
+    $stat->bindParam(':id',$data['id']);
     $result = $stat->execute();
     return $result;
 }

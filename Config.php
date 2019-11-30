@@ -1,11 +1,8 @@
 <?php
 define('DB', [
-    'dsn'      => 'mysql:dbname=markup; host=localhost',
+    'dsn'      => 'mysql:dbname=markup;host=localhost',
     'username' => 'root',
     'password' => ''
 ]);
 define('AVATARS_PATH', __DIR__ . '\profile\uploads\avatars\\');
-define('ADMIN', [
-    'login' => 'backster',
-    'email' => 'backstercorp@gmail.com'
-]);
+define('ADMIN', 'backster');

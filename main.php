@@ -25,7 +25,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <?php if( isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1' && isset($_SESSION['user']) && $_SESSION['user'] == ADMIN['login']): ?>
+                <?php if( isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1' && isset($_SESSION['user']) && $_SESSION['user'] == ADMIN): ?>
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <li></li>
@@ -129,7 +129,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Сообщение</label>
                                         <div class="col-md-6">
-                                            <textarea name="content" class="form-control <?= @$_COOKIE['empty_content'];?>" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <textarea name="content" class="form-control <?= @$_COOKIE['empty_content'];?>" id="exampleFormControlTextarea1" rows="3" aria-required="true"></textarea>
                                             <span class="invalid-feedback " role="alert">
                                                     <strong>Заполните поле</strong>
                                                 </span>

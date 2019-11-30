@@ -1,7 +1,7 @@
 <?php
 if(isset($_SESSION['log_complete']) && $_SESSION['log_complete'] == '1')
 {
-    if(isset($_SESSION['user']) && $_SESSION['user'] != ADMIN['login'])
+    if(isset($_SESSION['user']) && $_SESSION['user'] != ADMIN)
     {
         header('Location: /');
         exit;
